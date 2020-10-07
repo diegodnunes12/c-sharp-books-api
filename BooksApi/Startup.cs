@@ -31,6 +31,19 @@ namespace BooksApi
 
             services.AddDbContext<BooksApiContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("BooksApiContext")));
+
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+            });
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.WithOrigins("http://localhost:53050"));
+            });
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.WithOrigins("http://localhost:4200"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,6 +60,11 @@ namespace BooksApi
 
             app.UseHttpsRedirection();
             app.UseMvc();
+
+            app.UseCors(options => options.AllowAnyOrigin());
+
+            app.UseCors(options => options.WithOrigins("http://localhost:53050"));
+            app.UseCors(options => options.WithOrigins("http://localhost:4200"));
         }
     }
 }

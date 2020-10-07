@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BooksApi.Data;
 using BooksApi.Models;
+using Microsoft.AspNetCore.Cors;
 
 namespace BooksApi.Controllers
 {
@@ -23,6 +24,7 @@ namespace BooksApi.Controllers
 
         // GET: api/Books
         [HttpGet]
+        [EnableCors("AllowOrigin")]
         public IEnumerable<Book> GetBook()
         {
             return _context.Book;
@@ -84,6 +86,7 @@ namespace BooksApi.Controllers
 
         // POST: api/Books
         [HttpPost]
+        [EnableCors("AllowOrigin")]
         public async Task<IActionResult> PostBook([FromBody] Book book)
         {
             if (!ModelState.IsValid)
